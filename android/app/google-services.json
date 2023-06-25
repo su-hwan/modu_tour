@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "160225254622",
+    "firebase_url": "https://modutour-ae43f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "modutour-ae43f",
+    "storage_bucket": "modutour-ae43f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160225254622:android:272052f144d3fe4992f64f",
+        "android_client_info": {
+          "package_name": "com.su.modu_tour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160225254622-jtlls2vornvrta2t0tupguk3vgs24cql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAStxAW2SGF0DKaNbwa-rmruM3OvKCCIzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160225254622-jtlls2vornvrta2t0tupguk3vgs24cql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

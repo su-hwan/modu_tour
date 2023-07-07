@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:modu_tour/login.dart';
+import 'package:modu_tour/main/main_page.dart';
 import 'package:modu_tour/sign_page.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/sign': (context) => const SignPage(),
+        '/main': (context) => const MainPage(),
       },
     );
   }

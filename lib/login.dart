@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:modu_tour/make_dialog.dart';
+import 'package:modu_tour/util.dart';
 
 import 'data/user.dart';
 
@@ -33,8 +33,8 @@ class _LoginPageState extends State<LoginPage>
     _database = FirebaseDatabase.instance;
     _ref = _database!.ref('users');
 
-    _idTextController = TextEditingController();
-    _pwdTextController = TextEditingController();
+    _idTextController = TextEditingController(text: 'tester');
+    _pwdTextController = TextEditingController(text: '123456');
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _animation =
@@ -132,9 +132,6 @@ class _LoginPageState extends State<LoginPage>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-            onPressed: () => Navigator.of(context).pushNamed('/sign'),
-            child: const Text('회원가입')),
-        TextButton(
             onPressed: () async {
               if (_idTextController!.value.text.isEmpty ||
                   _pwdTextController!.value.text.isEmpty) {
@@ -146,16 +143,12 @@ class _LoginPageState extends State<LoginPage>
                 if (!snapshot.exists) {
                   MakeDialog.build(context, '아이디가 없습니다.');
                 } else {
-                  final castedSnapshot =
-                      snapshot.value as Map<dynamic, dynamic>;
-
-                  final mapData =
-                      Map<String, dynamic>.from(castedSnapshot.values.single);
-                  User user = User.fromJson(mapData);
+                  User user = User.fromJson(snapshot);
                   var bytes = utf8.encode(_pwdTextController!.value.text);
                   var digest = sha1.convert(bytes);
                   print('user.pw: ${user.pw}, digest: ${digest.toString()}');
                   if (user.pw == digest.toString()) {
+                    //main page로 이동
                     Navigator.of(context).pushReplacementNamed("/main",
                         arguments: _idTextController!.value.text);
                   } else {
@@ -164,7 +157,10 @@ class _LoginPageState extends State<LoginPage>
                 }
               }
             },
-            child: const Text('로그인'))
+            child: const Text('로그인')),
+        TextButton(
+            onPressed: () => Navigator.of(context).pushNamed('/sign'),
+            child: const Text('회원가입')),
       ],
     );
   }

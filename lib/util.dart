@@ -5,8 +5,7 @@ class Util {
 
   static Map<String, dynamic> dataSnapshotToMap(DataSnapshot snapshot) {
     final castedSnapshot = snapshot.value as Map<dynamic, dynamic>;
-
-    final mapData = Map<String, dynamic>.from(castedSnapshot.values.single);
+    final mapData = Map<String, dynamic>.from(castedSnapshot);
     mapData['snapshot_key'] = snapshot.key;
     return mapData;
   }

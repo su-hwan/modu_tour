@@ -39,7 +39,7 @@ class TourData {
         tel = map['tel'],
         zipcode = map['zipcode'],
         address = map['addr1']+map['addr2'],
-        id = map['id'],
+        id = map['contentid'],
         mapx = map['mapx'],
         mapy = map['mapy'],
         imagePath = map['firstimage'];

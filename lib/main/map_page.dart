@@ -8,7 +8,7 @@ import 'package:modu_tour/main/tour_detail_page.dart';
 import 'package:modu_tour/util.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../data/list_data.dart';
+import 'package:modu_tour/data/list_data.dart';
 
 class MapPage extends StatefulWidget {
   final DatabaseReference? dbRef; //firebase db
@@ -115,13 +115,16 @@ class _MapPageState extends State<MapPage> {
                       child: InkWell(
                         //InkWell : 제스처 안되는 자식위젯 onTap 기능 제공
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
                               builder: (context) => TourDetailPage(
-                                    id: widget.id,
-                                    tourData: tourData[index],
-                                    index: index,
-                                    databaseRef: widget.dbRef,
-                                  )));
+                                id: widget.id,
+                                tourData: tourData[index],
+                                index: index,
+                                databaseRef: widget.dbRef,
+                              ),
+                            ),
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

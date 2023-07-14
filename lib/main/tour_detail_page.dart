@@ -37,7 +37,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
   void initState() {
     super.initState();
     widget.databaseRef!
-        .child('tour')
+        // .child('tour')
         .child(widget.tourData!.id.toString())
         .child('review')
         .onChildAdded
@@ -116,7 +116,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
                       ),
                     ),
                     getGoogleMap(),
-                    !_disableWidget ? setDisableWidget() : showDisableWidget(),
+                    _disableWidget == false ? setDisableWidget() : showDisableWidget(),
                   ],
                 ),
               ),
@@ -160,7 +160,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
                     onDoubleTap: () {
                       if (reviews[index].id == widget.id) {
                         widget.databaseRef!
-                            .child('tour')
+                            // .child('tour')
                             .child(widget.tourData!.id.toString())
                             .child('review')
                             .child(widget.id!)
@@ -207,11 +207,12 @@ class _TourDetailPageState extends State<TourDetailPage> {
             Review review = Review(widget.id!, _reviewController.value.text,
                 DateTime.now().toIso8601String());
             widget.databaseRef!
-                .child('tour')
+                // .child('tour')
                 .child(widget.tourData!.id.toString())
                 .child('review')
                 .child(widget.id!)
-                .set(review);
+                .set(review.toJson());
+            Navigator.of(context).pop();
           },
           child: const Text('후기 쓰기'),
         ),
@@ -227,7 +228,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
 
   void getDisableInfo() {
     widget.databaseRef!
-        .child('tour')
+        // .child('tour')
         .child(widget.tourData!.id.toString())
         .onValue
         .listen((event) {
@@ -235,10 +236,16 @@ class _TourDetailPageState extends State<TourDetailPage> {
       if (event.snapshot.exists) {
         _disableInfo = DisableInfo.fromSnapshot(event.snapshot);
       }
-      if (_disableInfo != null && _disableInfo!.id == null) {
-        _disableWidget = false;
+      if (_disableInfo == null || _disableInfo!.id == null) {
+        setState(() {
+          _disableWidget = false;
+          print('_disableWidget_1:${_disableWidget}');
+        });
       } else {
-        _disableWidget = true;
+        setState(() {
+          _disableWidget = true;
+          print('_disableWidget_2:${_disableWidget}');
+        });
       }
       // }
     });
@@ -272,7 +279,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
               },
             ),
           ),
-          Text('청각 장애인 이용 점수 : ${disableCheck2.floor()}'),
+          Text('지체 장애인 이용 점수 : ${disableCheck2.floor()}'),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Slider(
@@ -294,13 +301,15 @@ class _TourDetailPageState extends State<TourDetailPage> {
                 disable2: disableCheck2.floor(),
                 createTime: DateTime.now().toIso8601String(),
               );
+              print('info:${info.toJson()}');
               widget.databaseRef!
-                  .child('tour')
+                  // .child('tour')
                   .child(widget.tourData!.id.toString())
                   .set(info.toJson())
                   .then((value) {
                 setState(() {
                   _disableWidget = true;
+                  print('_disableWidget_3:${_disableWidget}');
                 });
               });
             },
@@ -313,7 +322,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
 
   Widget getGoogleMap() {
     return SizedBox(
-      height: 40,
+      height: 400,
       width: MediaQuery.of(context).size.width - 50,
       //구글맵
       child: GoogleMap(
@@ -336,7 +345,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
             children: [
               const Icon(Icons.accessible, size: 40, color: Colors.orange),
               Text(
-                '지체 장애 점수 : ${_disableInfo!.disable2}',
+                '지체 장애 이용 점수 : ${_disableInfo!.disable2}',
                 style: const TextStyle(fontSize: 20),
               ),
             ],
@@ -349,7 +358,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
             children: [
               const Icon(Icons.remove_red_eye, size: 40, color: Colors.orange),
               Text(
-                '시각 장애 점수 : ${_disableInfo!.disable1}',
+                '시각 장애 이용 점수 : ${_disableInfo!.disable1}',
                 style: const TextStyle(fontSize: 20),
               ),
             ],
@@ -365,6 +374,7 @@ class _TourDetailPageState extends State<TourDetailPage> {
             onPressed: () {
               setState(() {
                 _disableWidget = false;
+                print('_disableWidget_4:${_disableWidget}');
               });
             },
             child: const Text('새로 작성하기'),

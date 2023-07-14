@@ -113,7 +113,7 @@ class _SignPageState extends State<SignPage> {
               var digest = sha1.convert(bytes);
               await _ref
                   .child(_idTextController.value.text)
-                  .push()
+                  //.push()
                   .set(User(
                           id: _idTextController.value.text,
                           pw: digest.toString(),
